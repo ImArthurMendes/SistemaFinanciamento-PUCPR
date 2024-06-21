@@ -1,0 +1,2 @@
+# SistemaFinanciamento-PUCPR
+ Este repositório contém o projeto desenvolvido durante a disciplina de Programação Orientada a Objetos (POO), parte do curso de Análise e Desenvolvimento de Sistemas na Pontifícia Universidade Católica do Paraná (PUCPR). O projeto está sendo escrito em Java e visa aplicar os conceitos aprendidos na matéria, como encapsulamento, herança, polimorfismo, e muito mais. O objetivo deste sistema é gerenciar o financiamento de imóveis, oferecendo funcionalidades para calcular parcelas, simular financiamentos, e administrar contratos.
