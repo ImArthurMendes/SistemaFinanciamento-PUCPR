@@ -23,18 +23,36 @@ class Main {
         double taxaJuros = interfaceUsuario.pedirTaxaJuros();
         int prazoFinanciamentoEmAnos = interfaceUsuario.pedirPrazoFinanciamento();
         double valorImovel = interfaceUsuario.pedirValorImovel();
+        int tipoImovel = interfaceUsuario.pedirTipoImovel();
 
-        // Adiciona o financiamento do usuário
-        System.out.println("\n");
-        Financiamento financiamentoUsuario = new Financiamento (valorImovel, prazoFinanciamentoEmAnos, taxaJuros);
-        financiamentos.add(financiamentoUsuario);
-
-        // Adiciona os demais financiamentos diretamente
-        financiamentos.add(new Casa(300000, 20, 8.5));
-        financiamentos.add(new Casa(250000, 15, 7.0));
-        financiamentos.add(new Apartamento(450000, 15, 10));
-        financiamentos.add(new Apartamento(200000, 10, 9));
-        financiamentos.add(new Terreno(150000, 12, 11));
+        Financiamento financiamentoUsuario = null;
+        switch (tipoImovel) {
+            case 1:
+                double tamanhoAreaConstruida = interfaceUsuario.pedirTamanhoAreaConstruida();
+                double tamanhoTerreno = interfaceUsuario.pedirTamanhoTerreno();
+                financiamentoUsuario = new Casa(valorImovel, prazoFinanciamentoEmAnos, taxaJuros, tamanhoAreaConstruida, tamanhoTerreno);
+                financiamentos.add(financiamentoUsuario);
+                financiamentos.add(new Casa(300000, 20, 8.5, 200, 400));
+                financiamentos.add(new Casa(250000, 15, 7.0, 150, 350));
+                break;
+            case 2:
+                int numeroVagasGaragem = interfaceUsuario.pedirNumeroVagasGaragem();
+                int numeroAndar = interfaceUsuario.pedirNumeroAndar();
+                financiamentoUsuario = new Apartamento(valorImovel, prazoFinanciamentoEmAnos, taxaJuros, numeroVagasGaragem, numeroAndar);
+                financiamentos.add(financiamentoUsuario);
+                financiamentos.add(new Apartamento(450000, 15, 10, 2, 5));
+                financiamentos.add(new Apartamento(200000, 10, 9, 1, 3));
+                break;
+            case 3:
+                String tipoZona = interfaceUsuario.pedirTipoZona();
+                financiamentoUsuario = new Terreno(valorImovel, prazoFinanciamentoEmAnos, taxaJuros, tipoZona);
+                financiamentos.add(financiamentoUsuario);
+                financiamentos.add(new Terreno(150000, 12, 11, "Residencial"));
+                break;
+            default:
+                System.out.println("Tipo de imóvel inválido.");
+                System.exit(1);
+        }
 
         double totalValorImoveis = 0;
         double totalValorFinanciamentos = 0;

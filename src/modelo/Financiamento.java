@@ -11,7 +11,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class Financiamento {
+public abstract class Financiamento {
     protected double valorImovel;
     protected int prazoFinanciamento;
     protected double taxaJurosAnual;
@@ -34,9 +34,8 @@ public class Financiamento {
         this.taxaJurosAnual = taxaJurosAnual;
     }
 
-    public double calcularPagamentoMensal() {
-        return (this.valorImovel / (this.prazoFinanciamento * 12)) * (1 + (this.taxaJurosAnual / 12 / 100));
-    }
+    // Método abstrato para ser implementado nas subclasses
+    public abstract double calcularPagamentoMensal();
 
     public double calcularTotalPagamento() {
         return this.calcularPagamentoMensal() * this.prazoFinanciamento * 12;
