@@ -8,8 +8,13 @@
 package modelo;
 
 public class Apartamento extends Financiamento {
-    public Apartamento(double valorDesejadoImovel, int prazoFinanciamentoAnos, double taxaJurosAnual) {
+    private int numeroVagasGaragem;
+    private int numeroAndar;
+
+    public Apartamento(double valorDesejadoImovel, int prazoFinanciamentoAnos, double taxaJurosAnual, int numeroVagasGaragem, int numeroAndar) {
         super(valorDesejadoImovel, prazoFinanciamentoAnos, taxaJurosAnual);
+        this.numeroVagasGaragem = numeroVagasGaragem;
+        this.numeroAndar = numeroAndar;
     }
 
     @Override
@@ -23,5 +28,14 @@ public class Apartamento extends Financiamento {
     public void mostrarDadosFinanciamento() {
         System.out.println("\nTipo de imóvel: Apartamento");
         super.mostrarDadosFinanciamento();
+        System.out.println("Número de vagas na garagem: " + this.numeroVagasGaragem);
+        System.out.println("Número do andar: " + this.numeroAndar);
     }
 }
+
+
+
+
+
+
+
