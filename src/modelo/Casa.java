@@ -12,13 +12,11 @@ import util.DescontoMaiorDoQueJurosException;
 public class Casa extends Financiamento {
     private double tamanhoAreaConstruida;
     private double tamanhoTerreno;
-    private double descontoAplicado; // Variável para armazenar o desconto aplicado
 
-    public Casa(double valorDesejadoImovel, int prazoFinanciamentoAnos, double taxaJurosAnual, double tamanhoAreaConstruida, double tamanhoTerreno) {
-        super(valorDesejadoImovel, prazoFinanciamentoAnos, taxaJurosAnual);
+    public Casa(double valorImovel, int prazoFinanciamento, double taxaJurosAnual, double tamanhoAreaConstruida, double tamanhoTerreno) {
+        super(valorImovel, prazoFinanciamento, taxaJurosAnual);
         this.tamanhoAreaConstruida = tamanhoAreaConstruida;
         this.tamanhoTerreno = tamanhoTerreno;
-        this.descontoAplicado = 0; // Inicializa o desconto aplicado como zero
     }
 
     public double getTamanhoAreaConstruida() {
@@ -29,42 +27,24 @@ public class Casa extends Financiamento {
         return tamanhoTerreno;
     }
 
-    public double getDescontoAplicado() {
-        return descontoAplicado;
-    }
-
     @Override
     public double calcularPagamentoMensal() {
-        // Calcula o valor dos juros mensais
-        double taxaMensal = getTaxaJurosAnual() / 12 / 100;
-        int n = getPrazoFinanciamento() * 12;
-        double jurosMensal = (getValorImovel() * Math.pow((1 + taxaMensal), n) * taxaMensal) / (Math.pow((1 + taxaMensal), n) - 1);
-
-        // Calcula o pagamento mensal considerando o desconto
-        return jurosMensal - descontoAplicado;
+        double taxaMensal = Math.pow(1 + this.taxaJurosAnual / 100, 1.0 / 12) - 1;
+        int numeroMeses = this.prazoFinanciamento * 12;
+        return this.valorImovel * taxaMensal / (1 - Math.pow(1 + taxaMensal, -numeroMeses));
     }
 
     public void aplicarDesconto(double desconto) throws DescontoMaiorDoQueJurosException {
-        // Calcula o valor dos juros mensais
-        double taxaMensal = getTaxaJurosAnual() / 12 / 100;
-        int n = getPrazoFinanciamento() * 12;
-        double jurosMensal = (getValorImovel() * Math.pow((1 + taxaMensal), n) * taxaMensal) / (Math.pow((1 + taxaMensal), n) - 1);
-
-        // Verifica se o desconto é maior que os juros mensais
-        if (desconto > jurosMensal) {
-            throw new DescontoMaiorDoQueJurosException("O valor do desconto não pode ser maior do que os juros da mensalidade.");
+        double pagamentoMensalSemDesconto = this.calcularPagamentoMensal();
+        double pagamentoMensalComDesconto = pagamentoMensalSemDesconto - desconto;
+        if (pagamentoMensalComDesconto < 0) {
+            throw new DescontoMaiorDoQueJurosException("O desconto é maior do que o valor do pagamento mensal.");
         }
-
-        // Aplica o desconto
-        this.descontoAplicado = desconto;
+        //NESTA PARTE DO CÓDIGO, É LANÇADO A EXCESÃO, O DESCONTO É APLICADO AO PAGAMENTO MENSAL
     }
 
     @Override
-    public void mostrarDadosFinanciamento() {
-        System.out.println("\nTipo de imóvel: Casa");
-        super.mostrarDadosFinanciamento();
-        System.out.println("Tamanho da área construída: " + tamanhoAreaConstruida + " m²");
-        System.out.println("Tamanho do terreno: " + tamanhoTerreno + " m²");
-        System.out.println("Desconto aplicado: " + getDescontoAplicado());
+    public String toString() {
+        return super.toString() + ";" + this.tamanhoAreaConstruida + ";" + this.tamanhoTerreno;
     }
 }

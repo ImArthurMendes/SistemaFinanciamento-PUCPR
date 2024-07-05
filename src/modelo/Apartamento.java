@@ -7,32 +7,38 @@
 
 package modelo;
 
-public class Apartamento extends Financiamento {
+import java.io.Serializable;
+
+public class Apartamento extends Financiamento implements Serializable {
     private int numeroVagasGaragem;
     private int numeroAndar;
 
-    public Apartamento(double valorDesejadoImovel, int prazoFinanciamentoAnos, double taxaJurosAnual, int numeroVagasGaragem, int numeroAndar) {
-        super(valorDesejadoImovel, prazoFinanciamentoAnos, taxaJurosAnual);
+    public Apartamento(double valorImovel, int prazoFinanciamento, double taxaJurosAnual, int numeroVagasGaragem, int numeroAndar) {
+        super(valorImovel, prazoFinanciamento, taxaJurosAnual);
         this.numeroVagasGaragem = numeroVagasGaragem;
         this.numeroAndar = numeroAndar;
     }
 
+    public int getNumeroVagasGaragem() {
+        return numeroVagasGaragem;
+    }
+
+    public int getNumeroAndar() {
+        return numeroAndar;
+    }
+    //NESTA PARTE DO CÓDIGO, É REALIZADO O CÁLCULO DO PAGAMENTO MENSAL DAS PARCELAS DO APARTAMENTO, DE ACORDO COM AS INFORMAÇÕES INSERIDAS PELO USUÁRIO NO ARQUIVO MAIN.JAVA
     @Override
     public double calcularPagamentoMensal() {
-        double taxaMensal = taxaJurosAnual / 12 / 100;
-        int n = prazoFinanciamento * 12;
-        return (valorImovel * Math.pow((1 + taxaMensal), n) * taxaMensal) / (Math.pow((1 + taxaMensal), n) - 1);
+        double taxaMensal = Math.pow(1 + this.taxaJurosAnual / 100, 1.0 / 12) - 1;
+        int numeroMeses = this.prazoFinanciamento * 12;
+        return this.valorImovel * taxaMensal / (1 - Math.pow(1 + taxaMensal, -numeroMeses));
     }
 
     @Override
-    public void mostrarDadosFinanciamento() {
-        System.out.println("\nTipo de imóvel: Apartamento");
-        super.mostrarDadosFinanciamento();
-        System.out.println("Número de vagas na garagem: " + this.numeroVagasGaragem);
-        System.out.println("Número do andar: " + this.numeroAndar);
+    public String toString() {
+        return super.toString() + ";" + this.numeroVagasGaragem + ";" + this.numeroAndar;
     }
 }
-
 
 
 

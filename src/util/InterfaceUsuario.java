@@ -12,8 +12,8 @@ import java.util.Scanner;
 
 public class InterfaceUsuario {
     private Scanner scanner = new Scanner(System.in);
-    private static final int MAX_PRAZO_FINANCIAMENTO = 35;
-    private static final double MAX_TAXA_JUROS = 12.0;
+    private static final int MAX_PRAZO_FINANCIAMENTO = 35; //NESTA PARTE DO CÓDIGO EU DEFINI QUE O PRAZO MÁXIMO DO FINANCIAMENTO É DE 35 ANOS.
+    private static final double MAX_TAXA_JUROS = 12.0; //NESTA PARTE DO CÓDIGO EU DEFINI QUE A TAXA DE JUROS MÁXIMA É DE 12% AO ANO.
 
     public double pedirValorImovel() {
         double valorImovel = 0;
@@ -28,7 +28,7 @@ public class InterfaceUsuario {
                 entradaValida = true;
             } catch (InputMismatchException e) {
                 System.out.println("Erro: Valor do imóvel deve ser um número válido.");
-                scanner.nextLine(); // Limpar o buffer do scanner
+                scanner.nextLine(); // LINHA UTILIZADA APENAS PARA ORGANIZAÇÃO DO TERMINAL.
             } catch (IllegalArgumentException e) {
                 System.out.println("Erro: " + e.getMessage());
             }
@@ -40,11 +40,11 @@ public class InterfaceUsuario {
         int prazoFinanciamento = 0;
         boolean entradaValida = false;
         do {
-            try {
+            try { //AQUI EU ESTOU UTILIZANDO UM TRY CATCH PARA VERIFICAR SE O PRAZO DE FINANCIAMENTO É IGUAL OU INFERIOR A 35 ANOS, TAMBÉM VERIFICO SE O PRAZO INFORMADO É UM NÚMERO INTEIRO OU NÃO.
                 System.out.print("Qual o prazo do financiamento do Imóvel (em anos)? ");
                 prazoFinanciamento = scanner.nextInt();
                 if (prazoFinanciamento <= 0 || prazoFinanciamento > MAX_PRAZO_FINANCIAMENTO) {
-                    throw new IllegalArgumentException("Prazo de financiamento inválido.");
+                    throw new IllegalArgumentException("O prazo de financiamento fornecido é acima do utilizado no mercado, sendo superior há 35 anos. Por gentileza, escolha um prazo de financiamento válido.");
                 }
                 entradaValida = true;
             } catch (InputMismatchException e) {
@@ -61,11 +61,11 @@ public class InterfaceUsuario {
         double taxaJuros = 0;
         boolean entradaValida = false;
         do {
-            try {
+            try { //AQUI EU ESTOU UTILIZANDO UM TRY CATCH PARA VERIFICAR SE O JUROS DO FINANCIAMENTO É IGUAL OU INFERIOR A 12%. TAMBÉM VERIFICO SE A INFORMAÇÃO FORNECIDA É VÁLIDA OU NÃO.
                 System.out.print("Qual é a taxa de juros deste financiamento (sem %)? ");
                 taxaJuros = scanner.nextDouble();
                 if (taxaJuros <= 0 || taxaJuros > MAX_TAXA_JUROS) {
-                    throw new IllegalArgumentException("Taxa de juros inválida.");
+                    throw new IllegalArgumentException("A taxa de juros ultrapassa o limite estabelecido pela Lei nº 1.521/51, sendo acima de 12%. Por gentileza, escolha uma taxa de juros válida (sem %).");
                 }
                 entradaValida = true;
             } catch (InputMismatchException e) {
@@ -82,7 +82,7 @@ public class InterfaceUsuario {
         int tipoImovel = 0;
         boolean entradaValida = false;
         do {
-            try {
+            try { //AQUI EU PERGUNTO PARA O USUÁRIO QUAL O TIPO DO IMÓVEL QUE ELE GOSTARIA DE FAZER UM ORÇAMENTO, SE SERIA UMA CASA, UM APARTAMENTO OU UM TERRENO. SE ELE INFORMAR OUTRO TIPO DE IMÓVEL, O TERMINAL DIRÁ PARA ELE ESCOLHER UMA DAS TRÊS OPÇÕES.
                 System.out.println("Você gostaria de um orçamento para qual tipo de imóvel?");
                 System.out.println("1 - Casa");
                 System.out.println("2 - Apartamento");
@@ -106,7 +106,7 @@ public class InterfaceUsuario {
         double tamanhoArea = 0;
         boolean entradaValida = false;
         do {
-            try {
+            try { //AQUI EU PERGUNTO AO USUÁRIO QUAL O TAMANHO DO TERRENO E QUAL A METRAGEM DA ÁREA CONSTRUIDA. TAMBÉM VERIFICO SE AS INFORMAÇÕES FORNECIDAS SÃO CORRETAS OU INCORRETAS
                 System.out.print("Qual o tamanho da área construída (em m²)? ");
                 tamanhoArea = scanner.nextDouble();
                 if (tamanhoArea <= 0) {
@@ -127,7 +127,7 @@ public class InterfaceUsuario {
         double tamanhoTerreno = 0;
         boolean entradaValida = false;
         do {
-            try {
+            try { //NESTA PARTE DO CÓDIGO EU PEÇO AO USUÁRIO QUAL O TAMANHO DO TERRENO. TAMBÉM VERIFICO SE AS INFORMAÇÕES ESTÃO COERENTES COM A REGRA DE MERCADO.
                 System.out.print("Qual o tamanho do terreno (em m²)? ");
                 tamanhoTerreno = scanner.nextDouble();
                 if (tamanhoTerreno <= 0) {
@@ -148,7 +148,7 @@ public class InterfaceUsuario {
         int numeroVagas = 0;
         boolean entradaValida = false;
         do {
-            try {
+            try { //NESTA PARTE DO CÓDIGO EU PEÇO AO USUÁRIO QUAL O NÚMERO DE VAGAS. TAMBÉM VERIFICO SE AS INFORMAÇÕES ESTÃO COERENTES COM A REGRA DE MERCADO.
                 System.out.print("Quantas vagas de garagem? ");
                 numeroVagas = scanner.nextInt();
                 if (numeroVagas < 0) {
@@ -169,7 +169,7 @@ public class InterfaceUsuario {
         int numeroAndar = 0;
         boolean entradaValida = false;
         do {
-            try {
+            try { //NESTA PARTE DO CÓDIGO EU PEÇO AO USUÁRIO QUAL O ANDAR DO APARTAMENTO. TAMBÉM VERIFICO SE AS INFORMAÇÕES ESTÃO COERENTES COM A REGRA DE MERCADO.
                 System.out.print("Em qual andar o apartamento está localizado? ");
                 numeroAndar = scanner.nextInt();
                 if (numeroAndar < 0) {
@@ -190,7 +190,7 @@ public class InterfaceUsuario {
         String tipoZona = "";
         boolean entradaValida = false;
         do {
-            try {
+            try { //NESTA PARTE DO CÓDIGO EU PEÇO AO USUÁRIO QUAL A ZONA DO TERRENO. TAMBÉM VERIFICO SE AS INFORMAÇÕES ESTÃO COERENTES COM A REGRA DE MERCADO.
                 System.out.print("Qual o tipo da zona (Residencial, Comercial, Industrial)? ");
                 tipoZona = scanner.next();
                 if (!tipoZona.equalsIgnoreCase("Residencial") &&
@@ -213,7 +213,7 @@ public class InterfaceUsuario {
         double desconto = 0;
         boolean entradaValida = false;
         do {
-            try {
+            try { //NESTA PARTE DO CÓDIGO EU PEÇO AO USUÁRIO QUAL O DESCONTO APLICADO. TAMBÉM VERIFICO SE AS INFORMAÇÕES ESTÃO COERENTES COM A REGRA DE MERCADO.
                 System.out.print("Qual o desconto que deseja aplicar (em R$)? ");
                 desconto = scanner.nextDouble();
                 if (desconto < 0) {

@@ -7,25 +7,29 @@
 
 package modelo;
 
-public class Terreno extends Financiamento {
+import java.io.Serializable;
+
+public class Terreno extends Financiamento implements Serializable {
     private String tipoZona;
 
-    public Terreno(double valorDesejadoImovel, int prazoFinanciamentoAnos, double taxaJurosAnual, String tipoZona) {
-        super(valorDesejadoImovel, prazoFinanciamentoAnos, taxaJurosAnual);
+    public Terreno(double valorImovel, int prazoFinanciamento, double taxaJurosAnual, String tipoZona) {
+        super(valorImovel, prazoFinanciamento, taxaJurosAnual);
         this.tipoZona = tipoZona;
     }
 
+    public String getTipoZona() {
+        return tipoZona;
+    }
+    //NESTA PARTE DO CÓDIGO, É REALIZADO O CÁLCULO DO PAGAMENTO MENSAL DAS PARCELAS DO APARTAMENTO, DE ACORDO COM AS INFORMAÇÕES INSERIDAS PELO USUÁRIO NO ARQUIVO MAIN.JAVA
     @Override
     public double calcularPagamentoMensal() {
-        double taxaMensal = taxaJurosAnual / 12 / 100;
-        int n = prazoFinanciamento * 12;
-        return ((valorImovel * Math.pow((1 + taxaMensal), n) * taxaMensal) / (Math.pow((1 + taxaMensal), n) - 1)) * 1.02;
+        double taxaMensal = Math.pow(1 + this.taxaJurosAnual / 100, 1.0 / 12) - 1;
+        int numeroMeses = this.prazoFinanciamento * 12;
+        return this.valorImovel * taxaMensal / (1 - Math.pow(1 + taxaMensal, -numeroMeses));
     }
 
     @Override
-    public void mostrarDadosFinanciamento() {
-        System.out.println("\nTipo de imóvel: Terreno");
-        super.mostrarDadosFinanciamento();
-        System.out.println("Tipo de zona: " + this.tipoZona);
+    public String toString() {
+        return super.toString() + ";" + this.tipoZona;
     }
 }
